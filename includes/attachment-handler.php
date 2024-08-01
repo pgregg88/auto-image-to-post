@@ -23,17 +23,29 @@ function aitp_handle_new_attachment($attachment_id) {
             return;
         }
 
-        $tile_image = get_post_meta($post_id, 'tile_image', true);
-        $featured_image = get_post_meta($post_id, '_thumbnail_id', true);
+        // Define the meta keys for different image types
+        $meta_keys = [
+            'tile' => ['tile_image', '_thumbnail_id'],
+            'hero' => ['hero_image'],
+            'uc-0' => ['uc_graphic_0'],
+            'uc-1' => ['uc_graphic_0'],
+            'uc-2' => ['uc_graphic_1'],
+            'uc-3' => ['uc_graphic_2'],
+        ];
 
-        if (empty($tile_image) && $image_type == 'tile') {
-            update_post_meta($post_id, 'tile_image', $attachment_id);
-            aitp_log("Version 1.3 - Set tile_image for post $post_id to attachment $attachment_id");
-        } elseif (empty($featured_image) && $image_type == 'hero') {
-            update_post_meta($post_id, '_thumbnail_id', $attachment_id);
-            aitp_log("Version 1.3 - Set featured_image for post $post_id to attachment $attachment_id");
+        if (isset($meta_keys[$image_type])) {
+            foreach ($meta_keys[$image_type] as $meta_key) {
+                $current_image = get_post_meta($post_id, $meta_key, true);
+
+                if (empty($current_image)) {
+                    update_post_meta($post_id, $meta_key, $attachment_id);
+                    aitp_log("Version 1.3 - Set $meta_key for post $post_id to attachment $attachment_id");
+                } else {
+                    aitp_log("Version 1.3 - $meta_key already set for post $post_id, no update needed");
+                }
+            }
         } else {
-            aitp_log("Version 1.3 - Image type $image_type already set for post $post_id, no update needed");
+            aitp_log("Version 1.3 - Image type $image_type not recognized for post $post_id");
         }
     } else {
         aitp_log("Version 1.3 - Filename $filename does not match the expected pattern");
@@ -41,3 +53,4 @@ function aitp_handle_new_attachment($attachment_id) {
 }
 
 add_action('add_attachment', 'aitp_handle_new_attachment');
+
