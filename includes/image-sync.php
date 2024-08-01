@@ -1,4 +1,8 @@
 <?php
+if (!defined('ABSPATH')) {
+    exit; // Exit if accessed directly
+}
+
 // Function to sync tile_image and featured image manually
 function aitp_sync_images() {
     $post_limit = get_option('aitp_post_limit', '');
@@ -52,3 +56,4 @@ function aitp_sync_images() {
 
     aitp_log("Image synchronization completed");
 }
+?>

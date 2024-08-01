@@ -1,4 +1,8 @@
 <?php
+if (!defined('ABSPATH')) {
+    exit; // Exit if accessed directly
+}
+
 // Function to log events
 function aitp_log($message) {
     $logging_enabled = get_option('aitp_logging_enabled', false);
@@ -22,3 +26,4 @@ function in_range($post_id, $range) {
     }
     return false;
 }
+?>

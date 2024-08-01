@@ -1,4 +1,8 @@
 <?php
+if (!defined('ABSPATH')) {
+    exit; // Exit if accessed directly
+}
+
 // Function to handle new attachments
 function aitp_handle_new_attachment($attachment_id) {
     $attachment = get_post($attachment_id);
@@ -53,4 +57,4 @@ function aitp_handle_new_attachment($attachment_id) {
 }
 
 add_action('add_attachment', 'aitp_handle_new_attachment');
-
+?>

@@ -1,4 +1,8 @@
 <?php
+if (!defined('ABSPATH')) {
+    exit; // Exit if accessed directly
+}
+
 // Add a settings page to manage the post limit and logging
 function aitp_settings_page() {
     add_options_page(
@@ -33,38 +37,17 @@ function aitp_settings_page_html() {
         }
         if (isset($_POST['aitp_allowed_post_types'])) {
             update_option('aitp_allowed_post_types', sanitize_text_field($_POST['aitp_allowed_post_types']));
-            echo '<div class="updated"><p>Allowed post types saved.</p></div>';
+            echo '<div class="updated'><p>Allowed post types saved.</p></div>';
         }
         if (isset($_POST['clear_log'])) {
-            $upload_dir = wp_upload_dir();
-            $log_file = $upload_dir['basedir'] . '/aitp_log.txt';
-            if (file_exists($log_file)) {
-                file_put_contents($log_file, '');
-                echo '<div class="updated"><p>Log file cleared.</p></div>';
-            } else {
-                echo '<div class="error"><p>Log file does not exist.</p></div>';
-            }
+            aitp_clear_log();
         }
         if (isset($_POST['download_log'])) {
-            $upload_dir = wp_upload_dir();
-            $log_file = $upload_dir['basedir'] . '/aitp_log.txt';
-            if (file_exists($log_file)) {
-                header('Content-Description: File Transfer');
-                header('Content-Type: application/octet-stream');
-                header('Content-Disposition: attachment; filename="' . basename($log_file) . '"');
-                header('Expires: 0');
-                header('Cache-Control: must-revalidate');
-                header('Pragma: public');
-                header('Content-Length: ' . filesize($log_file));
-                readfile($log_file);
-                exit;
-            } else {
-                echo '<div class="error"><p>Log file does not exist.</p></div>';
-            }
+            aitp_download_log();
         }
         if (isset($_POST['sync_images'])) {
             aitp_sync_images();
-            echo '<div class="updated"><p>Tile and featured images synchronized.</p></div>';
+            echo '<div class="updated'><p>Tile and featured images synchronized.</p></div>';
         }
     }
 
@@ -166,3 +149,35 @@ function aitp_settings_page_html() {
     </script>
     <?php
 }
+
+// Clear log file
+function aitp_clear_log() {
+    $upload_dir = wp_upload_dir();
+    $log_file = $upload_dir['basedir'] . '/aitp_log.txt';
+    if (file_exists($log_file)) {
+        file_put_contents($log_file, '');
+        echo '<div class="updated"><p>Log file cleared.</p></div>';
+    } else {
+        echo '<div class="error'><p>Log file does not exist.</p></div>';
+    }
+}
+
+// Download log file
+function aitp_download_log() {
+    $upload_dir = wp_upload_dir();
+    $log_file = $upload_dir['basedir'] . '/aitp_log.txt';
+    if (file_exists($log_file)) {
+        header('Content-Description: File Transfer');
+        header('Content-Type: application/octet-stream');
+        header('Content-Disposition: attachment; filename="' . basename($log_file) . '"');
+        header('Expires: 0');
+        header('Cache-Control: must-revalidate');
+        header('Pragma: public');
+        header('Content-Length: ' . filesize($log_file));
+        readfile($log_file);
+        exit;
+    } else {
+        echo '<div class="error"><p>Log file does not exist.</p></div>';
+    }
+}
+?>

@@ -6,6 +6,10 @@ Version: 1.3
 Author: Preston Gregg
 */
 
+if (!defined('ABSPATH')) {
+    exit; // Exit if accessed directly
+}
+
 // Register activation hook to set default options
 function aitp_activate() {
     if (get_option('aitp_logging_enabled') === false) {
@@ -28,3 +32,4 @@ include(plugin_dir_path(__FILE__) . 'includes/settings-page.php');
 include(plugin_dir_path(__FILE__) . 'includes/attachment-handler.php');
 include(plugin_dir_path(__FILE__) . 'includes/image-sync.php');
 include(plugin_dir_path(__FILE__) . 'includes/utilities.php');
+?>
