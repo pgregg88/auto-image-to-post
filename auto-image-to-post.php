@@ -24,7 +24,7 @@ function aitp_activate() {
 register_activation_hook(__FILE__, 'aitp_activate');
 
 // Include other plugin files
-include(plugin_dir_path(__FILE__) . 'settings-page.php');
-include(plugin_dir_path(__FILE__) . 'attachment-handler.php');
-include(plugin_dir_path(__FILE__) . 'image-sync.php');
-include(plugin_dir_path(__FILE__) . 'utilities.php');
+include(plugin_dir_path(__FILE__) . 'includes/settings-page.php');
+include(plugin_dir_path(__FILE__) . 'includes/attachment-handler.php');
+include(plugin_dir_path(__FILE__) . 'includes/image-sync.php');
+include(plugin_dir_path(__FILE__) . 'includes/utilities.php');
