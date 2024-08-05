@@ -7,3 +7,5 @@ Thumbs.db
 .AppleDouble
 .rsyncignore
 deploy.sh
+git-deploy.sh
+deploy.sh
