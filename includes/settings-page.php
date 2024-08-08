@@ -37,7 +37,7 @@ function aitp_settings_page_html() {
         }
         if (isset($_POST['aitp_allowed_post_types'])) {
             update_option('aitp_allowed_post_types', sanitize_text_field($_POST['aitp_allowed_post_types']));
-            echo '<div class="updated'><p>Allowed post types saved.</p></div>';
+            echo '<div class="updated"><p>Allowed post types saved.</p></div>';
         }
         if (isset($_POST['clear_log'])) {
             aitp_clear_log();
@@ -47,7 +47,7 @@ function aitp_settings_page_html() {
         }
         if (isset($_POST['sync_images'])) {
             aitp_sync_images();
-            echo '<div class="updated'><p>Tile and featured images synchronized.</p></div>';
+            echo '<div class="updated"><p>Tile and featured images synchronized.</p></div>';
         }
     }
 
@@ -158,7 +158,7 @@ function aitp_clear_log() {
         file_put_contents($log_file, '');
         echo '<div class="updated"><p>Log file cleared.</p></div>';
     } else {
-        echo '<div class="error'><p>Log file does not exist.</p></div>';
+        echo '<div class="error"><p>Log file does not exist.</p></div>';
     }
 }
 
